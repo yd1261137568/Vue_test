@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我的</title>
+  <style type='text/css'>
+
+
+  </style>
+</head>
+<body>
+<div id="test3">
+  <input type="text" v-model="searchName">
+  <ul v-for="(item,index) in newFilterP" v-bind:key="index">
+    <li>{{index}}---{{item.name}}---{{item.age}}</li>
+  </ul>
+  <button @click="orderType=2">升序</button>
+  <button @click="orderType=3">降序</button>
+  <button @click="orderType=1">原序</button>
+</div>
+
+</body>
+<script type="text/javascript" src="./js/vue.js"></script>
+<script type='text/javascript'>
+new Vue({
+    el : '#test3',
+    data : {
+      persons:[
+        {name:'asfg',age:15},
+        {name:'ahsag',age:25},
+        {name:'asghjufg',age:18},
+        {name:'aszsdfg',age:20},
+        {name:'asfffghhsg',age:16},
+      ],
+      searchName:'',
+      orderType:1
+    },
+    computed : {
+      newFilterP(){
+        let {persons,searchName,orderType} = this;
+        //过滤数据
+        persons = persons.filter((item,index) => item.name.indexOf(searchName) !== -1);
+        console.log(persons);
+        //排序
+        if(orderType !== 1){
+          persons.sort((item1,item2) => {
+            if(orderType === 2){
+              //升序
+              return item1.age - item2.age;
+            }else{
+              return item2.age - item1.age;
+            }
+          })
+        }
+        return persons;
+      }
+    }
+});
+</script>
+</html>
